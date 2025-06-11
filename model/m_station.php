@@ -42,7 +42,7 @@ class M_Station extends Conn
        
      }else{ 
 
-        $c_s->setMsg("not found");
+        $c_s->setMsg("notfound");
         return false; 
      }
 

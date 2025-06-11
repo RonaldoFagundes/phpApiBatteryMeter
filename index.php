@@ -36,6 +36,11 @@ if($_GET['action'] === 'default'){
 }else if($_GET['action'] === 'list_analysis'){
 
    echo json_encode($s_a->listAnalysis()); 
+
+}else if($_GET['action'] === 'list_analysis_by_fk'){
+
+   $fk = $data['fkStation'];
+   echo json_encode($s_a->listAnalysisByFk($fk)); 
 }
 
 

@@ -41,6 +41,17 @@ include 'model/m_analysis.php';
    }
 
 
+   public function listAnalysisByFk ($fk)
+   {
+      
+      $this->c_a->setFkBty($fk);
+
+      if ( $this->m_a->selectAnalysisByFk($this->c_a) ) {
+           return $this->c_a->getList();
+      }else{
+           return $this->c_a->getMsg();
+      }
+   }
 
 
    

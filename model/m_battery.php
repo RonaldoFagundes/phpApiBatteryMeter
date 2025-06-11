@@ -42,7 +42,7 @@ class M_Battery extends Conn
        
      }else{ 
 
-        $c_b->setMsg("not found");
+        $c_b->setMsg("notfound");
         return false; 
      }
 
