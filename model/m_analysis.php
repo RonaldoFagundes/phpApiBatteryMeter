@@ -20,7 +20,7 @@ class M_Analysis extends Conn
 
 
 
-
+/*
   public function selectAnalysis(C_Analysis $c_a):bool
   {
 
@@ -48,19 +48,89 @@ class M_Analysis extends Conn
 
 
   }
-
+*/
 
 
 
    public function selectAnalysisByFk(C_Analysis $c_a):bool
   {
 
- $query = "SELECT * FROM tb_analysis WHERE fk_bty= :fk;" ;
+    $query = "SELECT * FROM tb_analysis WHERE fk_bty= :fk;" ;
       
     
 
       $sql = $this->pdo->prepare($query);   
       $sql->bindValue(':fk', $c_a->getFkBty()); 
+      $sql->execute();
+      
+
+
+      if ($sql->rowCount() > 0) {
+
+        $list_analysis = array();
+
+        while ($analysis = $sql->fetchAll(PDO::FETCH_ASSOC)) {
+             $list_analysis = $analysis;
+        }
+
+        $c_a->setList($list_analysis);
+        return true;
+       
+     }else{ 
+
+        $c_a->setMsg("notfound");
+        return false; 
+     }
+
+
+  }
+
+
+
+
+
+   public function selectAnalysisLastByFk(C_Analysis $c_a):bool
+  {   
+      
+    $query = "SELECT * FROM tb_analysis WHERE fk_bty= :fk ORDER BY id_anl DESC LIMIT 1;";     
+
+      $sql = $this->pdo->prepare($query);   
+      $sql->bindValue(':fk', $c_a->getFkBty()); 
+      $sql->execute();
+      
+
+
+      if ($sql->rowCount() > 0) {
+
+        $list_analysis = array();
+
+        while ($analysis = $sql->fetchAll(PDO::FETCH_ASSOC)) {
+             $list_analysis = $analysis;
+        }
+
+        $c_a->setList($list_analysis);
+        return true;
+       
+     }else{ 
+
+        $c_a->setMsg("notfound");
+        return false; 
+     }
+
+  }
+
+
+
+
+
+   public function selectAnalysisByDate(C_Analysis $c_a):bool
+  {          
+    
+    $query = "SELECT * FROM tb_analysis WHERE fk_bty= :fk and month(str_to_date(date_anl,'%d/%m/%Y'))= :month"; 
+
+      $sql = $this->pdo->prepare($query);   
+      $sql->bindValue(':fk', $c_a->getFkBty()); 
+      $sql->bindValue(':month', $c_a->getDate()); 
       $sql->execute();
       
 

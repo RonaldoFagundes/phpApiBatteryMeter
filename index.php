@@ -24,24 +24,47 @@ $data = json_decode($response_json, true);
 if($_GET['action'] === 'default'){
 
    echo json_encode("it works");
-
+/*
 }else if($_GET['action'] === 'list_station'){
 
    echo json_encode($s_s->listStation());   
-
+*/
 }else if($_GET['action'] === 'list_battery'){
 
    echo json_encode($s_b->listBattery());
-
+/*
 }else if($_GET['action'] === 'list_analysis'){
 
    echo json_encode($s_a->listAnalysis()); 
-
+*/
 }else if($_GET['action'] === 'list_analysis_by_fk'){
 
-   $fk = $data['fkStation'];
+   $fk = $data['fkStation'];   
    echo json_encode($s_a->listAnalysisByFk($fk)); 
+
+}else if($_GET['action'] === 'list_analysis_last_by_fk'){
+
+   $fk = $data['fkStation'];   
+   echo json_encode($s_a->listAnalysisLastByFk($fk)); 
+
+}else if($_GET['action'] === 'list_analysis_by_date'){
+   
+     $array_analysi = [
+          $data['analysi']['fk'],  
+          $data['analysi']['date'],           
+    ];
+    echo json_encode($s_a->listAnalysisByDate($data));
+    
+
+     /*
+      $fk = 1;   
+      $datea = 6;               
+      echo json_encode($s_a->listAnalysisByDate2($fk, $datea));
+      */
 }
+
+
+
 
 
 /*
