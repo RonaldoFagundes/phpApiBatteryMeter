@@ -18,17 +18,45 @@ $s_a = new S_Analysis();
 $response_json = file_get_contents("php://input");
 $data = json_decode($response_json, true);
 
-
-
-
-if($_GET['action'] === 'default'){
-
-   echo json_encode("it works");
 /*
-}else if($_GET['action'] === 'list_station'){
-
-   echo json_encode($s_s->listStation());   
+if(['/']){
+  
+   echo json_encode("it works empty ");
 */
+
+if($_GET['action'] === ''){
+
+   echo json_encode("api working...");
+
+
+}else if($_GET['action'] === 'cad_station'){
+
+   $station = [   
+     'Place'  => "Pedreira",
+     "qd"  => '5.2', 
+     "lote"  => '23.97',     
+   ];
+   echo json_encode($station);
+
+}else if($_GET['action'] === 'list_station'){
+   echo json_encode($s_s->listStation());
+
+
+}else if($_GET['action'] === 'cad_battery'){
+
+   $battery = [     
+     'tensao'  => 2.27,
+     "corrente"  => 5.2, 
+     "temperatura"  => 23,
+     "obs"  => "new battery ",
+     "date" =>  date('d-m-Y'),
+     "time" =>  date('H:i'),
+     "latencia"=>1.0005,
+     'fk'  => 1, 
+   ];
+
+   echo json_encode($battery);    
+
 }else if($_GET['action'] === 'list_battery'){
 
    echo json_encode($s_b->listBattery());
@@ -37,6 +65,8 @@ if($_GET['action'] === 'default'){
 
    echo json_encode($s_a->listAnalysis()); 
 */
+
+
 }else if($_GET['action'] === 'list_analysis_by_fk'){
 
    $fk = $data['fkStation'];   
@@ -53,17 +83,69 @@ if($_GET['action'] === 'default'){
           $data['analysi']['fk'],  
           $data['analysi']['date'],           
     ];
-    echo json_encode($s_a->listAnalysisByDate($data));
-    
+    echo json_encode($s_a->listAnalysisByDate($data));    
 
      /*
       $fk = 1;   
       $datea = 6;               
       echo json_encode($s_a->listAnalysisByDate2($fk, $datea));
       */
+
+}else if($_GET['action'] === 'get_data_hardware'){
+
+   $info_station = [
+     [
+     'fk'  => 1, 
+     'tensao'  => 2.27,
+     "corrente"  => 5.2, 
+     "temperatura"  => 23,
+     "latencia"=>1.0007 ,    
+     ],
+     [
+     'fk'  => 2, 
+     'tensao'  => 2.28,
+     "corrente"  => 4.7, 
+     "temperatura"  => 23,
+     "latencia"=>1.0205 ,           
+     ],
+   ];
+    
+  for($i = 0; $i < count($info_station); $i++){
+
+   $analys = [     
+      "battery"=>$info_station[$i]['fk'],
+      "condutancia"=>$info_station[$i]['tensao'] * $info_station[$i]['corrente'],            
+      "obs"  => "Read test battery ".$info_station[$i]['fk'],
+      "date" =>  date('d-m-Y'),
+      "time" =>  date('H:i'), 
+      "sign"=> $info_station[$i]['latencia'] / 1.000 , 
+    ];   
+
+     // echo json_encode($analys);   
+      print_r  ($analys); 
+   }  
+ 
+  /*
+    $analys = [
+     [
+      "battery"=>$info_station[0]['fk'],
+      "condutancia"=>$info_station[0]['tensao'] * $info_station[0]['corrente'],
+      "sign"=>$info_station[0]['latencia'] / 1000, 
+     ],
+
+      [
+      "battery"=>$info_station[1]['fk'],
+      "condutancia"=>$info_station[1]['tensao'] * $info_station[1]['corrente'],
+      "sign"=>$info_station[1]['latencia'] / 1000, 
+     ],
+    ];
+
+    echo json_encode($analys);   
+   */
+}else{
+  
+   print_r ("not found endpoint") ;
 }
-
-
 
 
 

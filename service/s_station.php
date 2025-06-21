@@ -30,7 +30,7 @@ include 'model/m_station.php';
 
 
 
-   /*
+  
    public function listStation ()
    {
       if ( $this->m_s->selectStation($this->c_s) ) {
@@ -39,7 +39,7 @@ include 'model/m_station.php';
            return $this->c_s->getMsg();
       }
    }
-  */
+  
 
 
 
