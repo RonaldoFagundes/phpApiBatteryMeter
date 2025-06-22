@@ -6,12 +6,12 @@ header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Requested-With, X-Auth-Token, Origin, Application");
 header("Content-Type: application/json; charset=utf-8");
 
-include 'service/s_station.php';
+
 include 'service/s_battery.php';
 include 'service/s_analysis.php';
 
 
-$s_s = new S_Station();
+
 $s_b = new S_Battery();
 $s_a = new S_Analysis();
 
@@ -27,20 +27,6 @@ if(['/']){
 if($_GET['action'] === ''){
 
    echo json_encode("api working...");
-
-
-}else if($_GET['action'] === 'cad_station'){
-
-   $station = [   
-     'Place'  => "Pedreira",
-     "qd"  => '5.2', 
-     "lote"  => '23.97',     
-   ];
-   echo json_encode($station);
-
-}else if($_GET['action'] === 'list_station'){
-   echo json_encode($s_s->listStation());
-
 
 }else if($_GET['action'] === 'cad_battery'){
 
@@ -60,6 +46,8 @@ if($_GET['action'] === ''){
 }else if($_GET['action'] === 'list_battery'){
 
    echo json_encode($s_b->listBattery());
+
+
 /*
 }else if($_GET['action'] === 'list_analysis'){
 
@@ -72,11 +60,16 @@ if($_GET['action'] === ''){
    $fk = $data['fkStation'];   
    echo json_encode($s_a->listAnalysisByFk($fk)); 
 
+
+
+/*
 }else if($_GET['action'] === 'list_analysis_last_by_fk'){
 
    $fk = $data['fkStation'];   
    echo json_encode($s_a->listAnalysisLastByFk($fk)); 
+*/
 
+/*
 }else if($_GET['action'] === 'list_analysis_by_date'){
    
      $array_analysi = [
@@ -85,11 +78,13 @@ if($_GET['action'] === ''){
     ];
     echo json_encode($s_a->listAnalysisByDate($data));    
 
-     /*
+     /
       $fk = 1;   
       $datea = 6;               
       echo json_encode($s_a->listAnalysisByDate2($fk, $datea));
-      */
+      /
+*/
+
 
 }else if($_GET['action'] === 'get_data_hardware'){
 

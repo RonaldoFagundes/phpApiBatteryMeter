@@ -88,7 +88,7 @@ class M_Analysis extends Conn
 
 
 
-
+ /*
    public function selectAnalysisLastByFk(C_Analysis $c_a):bool
   {   
       
@@ -118,11 +118,11 @@ class M_Analysis extends Conn
      }
 
   }
+ */
 
 
 
-
-
+ /*
    public function selectAnalysisByDate(C_Analysis $c_a):bool
   {          
     
@@ -154,7 +154,7 @@ class M_Analysis extends Conn
 
 
   }
-
+ */
 
 
 }
