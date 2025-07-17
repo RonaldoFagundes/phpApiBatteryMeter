@@ -8,9 +8,8 @@ class C_Battery
 private $id;
 private $tensao;
 private $condutancia;
-//private $desvio;
 private $obs;
-//private $fk_sta;
+private $date;
 private $list = [];
 private $msg;
 
@@ -74,28 +73,23 @@ return $this;
 }
 
 
-/*
-  Get the value of desvio
- 
-public function getDesvio()
+/**
+ * Get the value of date
+ */
+public function getDate()
 {
-return $this->desvio;
+return $this->date;
 }
 
-
-  Set the value of desvio
- 
-public function setDesvio($desvio): self
+/**
+ * Set the value of date
+ */
+public function setDate($date): self
 {
-$this->desvio = $desvio;
+$this->date = $date;
 
 return $this;
 }
-*/
-
-
-
-
 
 
 /**
@@ -115,26 +109,6 @@ $this->obs = $obs;
 
 return $this;
 }
-
-
-/*
-  Get the value of fk_sta
- 
-public function getFkSta()
-{
-return $this->fk_sta;
-}
-
-
-  Set the value of fk_sta
- 
-public function setFkSta($fk_sta): self
-{
-$this->fk_sta = $fk_sta;
-
-return $this;
-}
-*/
 
 
 
@@ -176,6 +150,10 @@ $this->msg = $msg;
 
 return $this;
 }
+
+
+
+
 
 
 }

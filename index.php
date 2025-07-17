@@ -7,27 +7,44 @@ header("Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Req
 header("Content-Type: application/json; charset=utf-8");
 
 
-include 'service/s_battery.php';
+
 include 'service/s_analysis.php';
 
-
-
-$s_b = new S_Battery();
 $s_a = new S_Analysis();
 
 $response_json = file_get_contents("php://input");
 $data = json_decode($response_json, true);
 
 /*
-if(['/']){
-  
+if(['/']){  
    echo json_encode("it works empty ");
 */
 
-if($_GET['action'] === ''){
+if($_GET['action'] === 'list_battery'){
+   echo json_encode($s_a->listBattery());
+}else if($_GET['action'] === 'list_analysis_by_fk'){
+   $fk = $data['fkStation'];   
+   echo json_encode($s_a->listAnalysisByFk($fk)); 
+}else if($_GET['action'] === 'insert_meter'){    
+    $array_meter = [
+          $data['meter']['volt'],  
+          $data['meter']['res'],           
+          $data['meter']['temp'],
+          $data['meter']['new'],
+          $data['meter']['fk'],
+    ]; 
+   //echo json_encode($s_a->insertMeter($data));    
+    echo json_encode($data);     
+}
 
-   echo json_encode("api working...");
 
+
+
+
+
+
+
+/*    
 }else if($_GET['action'] === 'cad_battery'){
 
    $battery = [     
@@ -41,49 +58,7 @@ if($_GET['action'] === ''){
      'fk'  => 1, 
    ];
 
-   echo json_encode($battery);    
-
-}else if($_GET['action'] === 'list_battery'){
-
-   echo json_encode($s_b->listBattery());
-
-
-/*
-}else if($_GET['action'] === 'list_analysis'){
-
-   echo json_encode($s_a->listAnalysis()); 
-*/
-
-
-}else if($_GET['action'] === 'list_analysis_by_fk'){
-
-   $fk = $data['fkStation'];   
-   echo json_encode($s_a->listAnalysisByFk($fk)); 
-
-
-
-/*
-}else if($_GET['action'] === 'list_analysis_last_by_fk'){
-
-   $fk = $data['fkStation'];   
-   echo json_encode($s_a->listAnalysisLastByFk($fk)); 
-*/
-
-/*
-}else if($_GET['action'] === 'list_analysis_by_date'){
-   
-     $array_analysi = [
-          $data['analysi']['fk'],  
-          $data['analysi']['date'],           
-    ];
-    echo json_encode($s_a->listAnalysisByDate($data));    
-
-     /
-      $fk = 1;   
-      $datea = 6;               
-      echo json_encode($s_a->listAnalysisByDate2($fk, $datea));
-      /
-*/
+   echo json_encode($battery);  
 
 
 }else if($_GET['action'] === 'get_data_hardware'){
@@ -120,7 +95,7 @@ if($_GET['action'] === ''){
       print_r  ($analys); 
    }  
  
-  /*
+    //
     $analys = [
      [
       "battery"=>$info_station[0]['fk'],
@@ -136,11 +111,12 @@ if($_GET['action'] === ''){
     ];
 
     echo json_encode($analys);   
-   */
-}else{
-  
-   print_r ("not found endpoint") ;
-}
+    //
+ */
+
+
+
+
 
 
 
@@ -193,9 +169,6 @@ if($_GET['action'] === 'default'){
 
 
 }else if($_GET['action'] === 'data_send'){   
-   
-
-
 
    $array_meter = [      
       $data['meter']['volt'],  
@@ -205,16 +178,12 @@ if($_GET['action'] === 'default'){
       $data['meter']['fk_sta'],
     ];
 
-
-
-
    $array_meter = [      
       $data['meter']['volt'],  
       $data['meter']['temp'],  
       $data['meter']['rest'],
       $data['meter']['fk'],
     ];
-
 
 
    echo json_encode($array_meter); 
@@ -257,9 +226,6 @@ if($_GET['action'] === 'default'){
         // temperatura ambiente de 25°C 
           
        
-
-
-
 
    // o hardware faz o calculo 
     if( $soh > 100 ){

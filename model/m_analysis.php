@@ -19,6 +19,60 @@ class M_Analysis extends Conn
 
 
 
+   public function selectAnalysisByFk(C_Analysis $c_a):bool
+  {
+
+    $query = "SELECT * FROM tb_analysis WHERE fk_bty= :fk;" ;        
+
+      $sql = $this->pdo->prepare($query);   
+      $sql->bindValue(':fk', $c_a->getFkBty()); 
+      $sql->execute();
+      
+      if ($sql->rowCount() > 0) {
+
+        $list_analysis = array();
+
+       while ($analysis = $sql->fetchAll(PDO::FETCH_ASSOC)) {
+             $list_analysis = $analysis;
+        }
+
+        $c_a->setList($list_analysis);
+        return true;
+       
+     }else{ 
+
+        $c_a->setMsg("notfound");
+        return false; 
+     }
+
+  }
+
+
+
+
+
+ public function insertAnalysis(C_Analysis $c_a)  {
+
+    $query = "INSERT INTO tb_analysis()VALUES()" ;
+          
+      $sql = $this->pdo->prepare($query);   
+      $sql->bindValue(':ten', $c_a->getTensao()); 
+      $sql->bindValue(':cor', $c_a->getCorrente());
+      $sql->bindValue(':tem', $c_a->getTemperatura());
+      $sql->bindValue(':date', $c_a->getDate());
+      $sql->bindValue(':time', $c_a->getTime());
+      $sql->bindValue(':fk', $c_a->getFkBty());
+      
+       if ( $sql->execute() ) {
+         $c_a->setMsg("success");
+       } else {
+         $c_a->setMsg("error");             
+       } 
+
+  }
+
+
+
 
 /*
   public function selectAnalysis(C_Analysis $c_a):bool
@@ -49,42 +103,6 @@ class M_Analysis extends Conn
 
   }
 */
-
-
-
-   public function selectAnalysisByFk(C_Analysis $c_a):bool
-  {
-
-    $query = "SELECT * FROM tb_analysis WHERE fk_bty= :fk;" ;
-      
-    
-
-      $sql = $this->pdo->prepare($query);   
-      $sql->bindValue(':fk', $c_a->getFkBty()); 
-      $sql->execute();
-      
-
-
-      if ($sql->rowCount() > 0) {
-
-        $list_analysis = array();
-
-        while ($analysis = $sql->fetchAll(PDO::FETCH_ASSOC)) {
-             $list_analysis = $analysis;
-        }
-
-        $c_a->setList($list_analysis);
-        return true;
-       
-     }else{ 
-
-        $c_a->setMsg("notfound");
-        return false; 
-     }
-
-
-  }
-
 
 
 

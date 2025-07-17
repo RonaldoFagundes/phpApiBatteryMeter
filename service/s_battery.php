@@ -42,6 +42,18 @@ include 'model/m_battery.php';
 
 
 
+   public function cadBattery($data)
+   {
+      $this->c_b->setTensao($data['battery']['tensao']);      
+       $this->c_b->setCondutancia($data['battery']['condutancia']); 
+        $this->c_b->setObs($data['battery']['obs']); 
+         
+        $this->m_b->insertBattery($this->c_b); 
+
+        return $this->c_b->getMsg();
+      
+   }
+
 
    
 
